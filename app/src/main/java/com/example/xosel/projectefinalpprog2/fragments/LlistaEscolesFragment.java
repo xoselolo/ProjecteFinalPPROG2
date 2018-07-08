@@ -41,7 +41,7 @@ public class LlistaEscolesFragment extends Fragment {
 
         ListView listView = view.findViewById(R.id.escoles_listview);
 
-        adapter = new TouchableListViewAdapter(typeSchools, listView, getActivity(), null);
+        adapter = new TouchableListViewAdapter(typeSchools, getActivity(), null);
 
         listView.setAdapter(adapter);
 

@@ -7,6 +7,7 @@ import android.view.MotionEvent;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -19,15 +20,13 @@ import java.util.List;
 public class TouchableListViewAdapter extends BaseAdapter implements View.OnTouchListener {
     //Attributes
     private ArrayList<School> data;
-    private ListView listView;
     private Context context;
     private GestureDetector gestureDetector;
     private String actualActivity;
 
     //Constructor
-    public TouchableListViewAdapter(ArrayList<School> data, ListView listView, Context context, String actualActivity) {
+    public TouchableListViewAdapter(ArrayList<School> data , Context context, String actualActivity) {
         this.data = data;
-        this.listView = listView;
         this.context = context;
         this.gestureDetector = new GestureDetector(context, new GestureDetector.OnGestureListener() {
 
@@ -73,13 +72,6 @@ public class TouchableListViewAdapter extends BaseAdapter implements View.OnTouc
         this.data = data;
     }
 
-    public ListView getListView() {
-        return listView;
-    }
-
-    public void setListView(ListView listView) {
-        this.listView = listView;
-    }
 
     public Context getContext() {
         return context;
@@ -141,7 +133,10 @@ public class TouchableListViewAdapter extends BaseAdapter implements View.OnTouc
         TextView schoolAddress = (TextView) itemView.findViewById(R.id.item_school_adress_textview);
         schoolAddress.setText(school.getAdress());
 
-        return view;
+        ImageView imageView = (ImageView) itemView.findViewById(R.id.item_school_imageview);
+        imageView.setImageResource(R.drawable.image);
+
+        return itemView;
     }
 
     public void updateData(ArrayList<School> schoolsList) {
