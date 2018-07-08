@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/anarALogin"
+        android:orderInCategory="2"
+        android:icon="@mipmap/ic_launcher"
+        android:title="@string/aLogin"
+        />
+    <item
+        android:id="@+id/anarAMapa"
+        android:orderInCategory="3"
+        android:icon="@mipmap/ic_launcher"
+        android:title="@string/aMapa"/>
+
+</menu>
