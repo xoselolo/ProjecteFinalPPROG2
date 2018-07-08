@@ -5,14 +5,14 @@
     <item
         android:id="@+id/anarALogin"
         android:orderInCategory="2"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@drawable/ic_login"
         android:title="@string/aLogin"
         app:showAsAction="ifRoom"
         />
     <item
         android:id="@+id/anarAMapa"
         android:orderInCategory="3"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@drawable/ic_map"
         android:title="@string/aMapa"
         app:showAsAction="ifRoom"/>
 
