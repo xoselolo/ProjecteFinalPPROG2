@@ -6,17 +6,20 @@ public class SchoolType {
     private boolean isPrimaria;
     private boolean isEso;
     private boolean isBatxillerat;
-    private boolean isFp;
+    private boolean isFP;
     private boolean isUniversitat;
 
     //Constructor
-    public SchoolType(boolean isInfantil, boolean isPrimaria, boolean isEso, boolean isBatxillerat, boolean isFp, boolean isUniversitat) {
+    public SchoolType(boolean isInfantil, boolean isPrimaria, boolean isEso, boolean isBatxillerat, boolean isFP, boolean isUniversitat) {
         this.isInfantil = isInfantil;
         this.isPrimaria = isPrimaria;
         this.isEso = isEso;
         this.isBatxillerat = isBatxillerat;
-        this.isFp = isFp;
+        this.isFP = isFP;
         this.isUniversitat = isUniversitat;
+    }
+
+    public SchoolType() {
     }
 
     //Getters & Setters
@@ -52,12 +55,12 @@ public class SchoolType {
         isBatxillerat = batxillerat;
     }
 
-    public boolean isFp() {
-        return isFp;
+    public boolean isFP() {
+        return isFP;
     }
 
-    public void setFp(boolean fp) {
-        isFp = fp;
+    public void setFP(boolean FP) {
+        isFP = FP;
     }
 
     public boolean isUniversitat() {

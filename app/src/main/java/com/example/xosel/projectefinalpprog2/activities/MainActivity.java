@@ -1,11 +1,13 @@
 package com.example.xosel.projectefinalpprog2.activities;
 
+import android.app.ProgressDialog;
 import android.support.design.widget.TabLayout;
 
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.widget.ArrayAdapter;
@@ -14,22 +16,44 @@ import android.widget.Spinner;
 import com.example.xosel.projectefinalpprog2.R;
 import com.example.xosel.projectefinalpprog2.adapters.TabAdapter;
 import com.example.xosel.projectefinalpprog2.fragments.LlistaEscolesFragment;
+import com.example.xosel.projectefinalpprog2.model.School;
+import com.example.xosel.projectefinalpprog2.repositories.SchoolsRepo;
+import com.example.xosel.projectefinalpprog2.repositories.impl.SchoolsWebService;
 
 import java.util.ArrayList;
+import java.util.List;
+
+import static java.lang.Thread.sleep;
 
 public class MainActivity extends AppCompatActivity {
+    private LlistaEscolesFragment tots;
+    private LlistaEscolesFragment escoles;
+    private LlistaEscolesFragment altres;
+    private ArrayList<School> schoolsList;
     private TabLayout tabLayout;
     private ViewPager viewPager;
     private Spinner spinnerCities;
+    private ProgressDialog progressDialog;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        SchoolsRepo artistasRepo = new SchoolsWebService(this);
+        progressDialog = new ProgressDialog(this);
+        progressDialog.setMessage(getString(R.string.please_wait));
+        progressDialog.show();
+        artistasRepo.getSchools( dataListener);
+
         setContentView(R.layout.activity_main);
         createToolbar();
-        createTabs();
         createSpinner();
+
+
+
+
+
 
 
     }
@@ -44,9 +68,15 @@ public class MainActivity extends AppCompatActivity {
         viewPager = (ViewPager) findViewById(R.id.viewPager);
 
         ArrayList<TabAdapter.TabEntry> entries = new ArrayList<>();
-        entries.add(new TabAdapter.TabEntry(new LlistaEscolesFragment(),getString(R.string.all)));
-        entries.add(new TabAdapter.TabEntry(new LlistaEscolesFragment(), getString(R.string.school)));
-        entries.add(new TabAdapter.TabEntry(new LlistaEscolesFragment(), getString(R.string.other)));
+        LlistaEscolesFragment l1 = new LlistaEscolesFragment();
+        LlistaEscolesFragment l2 = new LlistaEscolesFragment();
+        LlistaEscolesFragment l3 = new LlistaEscolesFragment();
+        l1.carrega_dades(schoolsList);
+        l2.carrega_dades(schoolsList);
+        l3.carrega_dades(schoolsList);
+        entries.add(new TabAdapter.TabEntry(l1,getString(R.string.all)));
+        entries.add(new TabAdapter.TabEntry(l2, getString(R.string.school)));
+        entries.add(new TabAdapter.TabEntry(l3, getString(R.string.other)));
 
         TabAdapter adapter = new TabAdapter(getSupportFragmentManager(), entries);
         viewPager.setAdapter(adapter);
@@ -67,4 +97,15 @@ public class MainActivity extends AppCompatActivity {
         spinnerCities.setAdapter(adaptador_cities);
 
     }
+    private SchoolsRepo.Callback<ArrayList<School>> dataListener = new SchoolsRepo.Callback<ArrayList<School>>() {
+        @Override
+        public void onResponse(ArrayList<School> schoolList_aux) {
+            if (progressDialog.isShowing()) {
+                progressDialog.dismiss();
+            }
+            schoolsList = schoolList_aux;
+            createTabs();
+            //adapter.updateData(artistaList_aux);
+        }
+    };
 }

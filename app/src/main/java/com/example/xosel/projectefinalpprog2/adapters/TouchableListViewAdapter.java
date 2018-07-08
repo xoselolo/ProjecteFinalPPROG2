@@ -2,15 +2,19 @@ package com.example.xosel.projectefinalpprog2.adapters;
 
 import android.content.Context;
 import android.view.GestureDetector;
+import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.view.View;
 import android.widget.ListView;
+import android.widget.TextView;
 
+import com.example.xosel.projectefinalpprog2.R;
 import com.example.xosel.projectefinalpprog2.model.School;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class TouchableListViewAdapter extends BaseAdapter implements View.OnTouchListener {
     //Attributes
@@ -124,8 +128,25 @@ public class TouchableListViewAdapter extends BaseAdapter implements View.OnTouc
 
     @Override
     public View getView(int i, View view, ViewGroup viewGroup) {
-        return null;
+        LayoutInflater inflater =
+                (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+
+        View itemView = inflater.inflate(R.layout.school_item, viewGroup, false);
+
+        School school = data.get(i);
+
+        TextView schoolName = (TextView) itemView.findViewById(R.id.item_school_name_textview);
+        schoolName.setText(school.getName());
+
+        TextView schoolAddress = (TextView) itemView.findViewById(R.id.item_school_adress_textview);
+        schoolAddress.setText(school.getAdress());
+
+        return view;
     }
 
-    //TODO: Click, el nostre propi Gesture, etc.
+    public void updateData(ArrayList<School> schoolsList) {
+        notifyDataSetInvalidated();
+        this.data = schoolsList;
+        notifyDataSetChanged();
+    }
 }

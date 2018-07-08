@@ -12,4 +12,5 @@
     <string name="lleida">Lleida</string>
     <string name="girona">Girona</string>
     <string name="barcelona">Barcelona</string>
+    <string name="please_wait">Getting the information. Please wait.</string>
 </resources>
