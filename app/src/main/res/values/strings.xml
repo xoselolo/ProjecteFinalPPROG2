@@ -5,5 +5,11 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="aLogin">accedir a login</string>
     <string name="aMapa">accedir a mapa</string>
-    <string name="title_activity_maps">Map</string>
+    <string name="all">all</string>
+    <string name="school">school</string>
+    <string name="other">other</string>
+    <string name="tarragona">Tarragona</string>
+    <string name="lleida">Lleida</string>
+    <string name="girona">Girona</string>
+    <string name="barcelona">Barcelona</string>
 </resources>
