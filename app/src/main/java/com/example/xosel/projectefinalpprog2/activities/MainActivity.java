@@ -44,7 +44,7 @@ public class MainActivity extends AppCompatActivity {
         viewPager = (ViewPager) findViewById(R.id.viewPager);
 
         ArrayList<TabAdapter.TabEntry> entries = new ArrayList<>();
-        entries.add(new TabAdapter.TabEntry(new LlistaEscolesFragment(), getString(R.string.all)));
+        entries.add(new TabAdapter.TabEntry(new LlistaEscolesFragment(),getString(R.string.all)));
         entries.add(new TabAdapter.TabEntry(new LlistaEscolesFragment(), getString(R.string.school)));
         entries.add(new TabAdapter.TabEntry(new LlistaEscolesFragment(), getString(R.string.other)));
 
