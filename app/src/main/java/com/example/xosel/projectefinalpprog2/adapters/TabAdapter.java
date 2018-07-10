@@ -3,10 +3,13 @@ package com.example.xosel.projectefinalpprog2.adapters;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.app.FragmentStatePagerAdapter;
 
 import java.util.List;
 
-public class TabAdapter extends FragmentPagerAdapter{
+public class TabAdapter extends FragmentStatePagerAdapter{
+
+    //class to know a part of the tab
     public static class TabEntry {
         private Fragment fragment;
         private String name;
@@ -27,8 +30,7 @@ public class TabAdapter extends FragmentPagerAdapter{
 
     private List<TabEntry> entries;
 
-
-    public TabAdapter(FragmentManager fm, List<TabEntry> entries) {
+    public TabAdapter(FragmentManager fm, List<TabEntry> entries){
         super(fm);
         this.entries = entries;
     }
@@ -47,5 +49,12 @@ public class TabAdapter extends FragmentPagerAdapter{
     public CharSequence getPageTitle(int position) {
         return entries.get(position).getName();
     }
+
+    @Override
+    public int getItemPosition(Object object) {
+        return POSITION_NONE;
+    }
+
+
 }
 

@@ -24,6 +24,7 @@ import com.android.volley.toolbox.Volley;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
+import java.nio.charset.Charset;
 import java.util.ArrayList;
 
 
@@ -59,7 +60,9 @@ public class SchoolsWebService implements SchoolsRepo {
                 new StringRequest(Request.Method.GET, URL,  new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
+
                         ArrayList<School> list = null;
+                        Log.d("CAca",response+" !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
 
                         try {
                             JSONObject json = new JSONObject(response);
@@ -89,15 +92,15 @@ public class SchoolsWebService implements SchoolsRepo {
         type.setBatxillerat(string_to_boolean(object.getString(BAT)));
         type.setFP(string_to_boolean(object.getString(FP)));
         type.setUniversitat(string_to_boolean(object.getString(UNI)));
-        School school = new School(Integer.parseInt(object.getString(SCHOOL_ID)),
+        return   new School(Integer.parseInt(object.getString(SCHOOL_ID)),
                 object.getString(SCHOOL_NAME),
                 object.getString(SCHOOL_ADDRESS),
                 object.getString(SCHOOL_DESCRIPTION),
                 type,
                 object.getString(SCHOOL_PROVINCE));
-        return school;
+
     }
     private Boolean string_to_boolean(String aux){
-        return aux == "1";
+        return aux.equals("1");
     }
 }

@@ -119,29 +119,31 @@ public class TouchableListViewAdapter extends BaseAdapter implements View.OnTouc
     }
 
     @Override
-    public View getView(int i, View view, ViewGroup viewGroup) {
-        LayoutInflater inflater =
-                (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+    public View getView(int i, View itemView, ViewGroup viewGroup) {
+        View view;
+        if ( itemView == null) {
+            LayoutInflater inflater = (LayoutInflater)
+                    context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
-        View itemView = inflater.inflate(R.layout.school_item, viewGroup, false);
+            view = inflater.inflate(R.layout.school_item,
+                    viewGroup, false);
+        } else {
+            view = itemView;
+        }
 
         School school = data.get(i);
 
-        TextView schoolName = (TextView) itemView.findViewById(R.id.item_school_name_textview);
+        TextView schoolName = (TextView) view.findViewById(R.id.item_school_name_textview);
         schoolName.setText(school.getName());
 
-        TextView schoolAddress = (TextView) itemView.findViewById(R.id.item_school_adress_textview);
+        TextView schoolAddress = (TextView) view.findViewById(R.id.item_school_adress_textview);
         schoolAddress.setText(school.getAdress());
 
-        ImageView imageView = (ImageView) itemView.findViewById(R.id.item_school_imageview);
+        ImageView imageView = (ImageView) view.findViewById(R.id.item_school_imageview);
         imageView.setImageResource(R.drawable.image);
 
-        return itemView;
+        return view;
     }
 
-    public void updateData(ArrayList<School> schoolsList) {
-        notifyDataSetInvalidated();
-        this.data = schoolsList;
-        notifyDataSetChanged();
-    }
+
 }

@@ -44,11 +44,18 @@ public class LlistaEscolesFragment extends Fragment {
         adapter = new TouchableListViewAdapter(typeSchools, getActivity(), null);
 
         listView.setAdapter(adapter);
+        context = getActivity();
 
         return view;
     }
-    public void carrega_dades(ArrayList schools){
-        this.typeSchools =schools;
 
+    public void carrega_dades(ArrayList schools){
+        typeSchools = new ArrayList<School>();
+        this.typeSchools = schools;
+        if (context != null) {
+            adapter.notifyDataSetChanged();
+        }
     }
+
+
 }
