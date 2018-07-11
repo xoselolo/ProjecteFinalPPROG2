@@ -7,6 +7,11 @@ import android.os.Bundle;
 import android.util.Log;
 import android.widget.ImageView;
 
+import com.android.volley.NetworkResponse;
+import com.android.volley.ParseError;
+import com.android.volley.toolbox.HttpHeaderParser;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.JsonRequest;
 import com.example.xosel.projectefinalpprog2.model.School;
 import com.example.xosel.projectefinalpprog2.model.SchoolType;
 import com.example.xosel.projectefinalpprog2.repositories.SchoolsRepo;
@@ -55,19 +60,15 @@ public class SchoolsWebService implements SchoolsRepo {
 
     public void getSchools(final Callback<ArrayList<School>> dataResponse) {
 
-
-        StringRequest request =
-                new StringRequest(Request.Method.GET, URL,  new Response.Listener<String>() {
+        JSONObject jsonRequest = new JSONObject();
+        JsonObjectRequest request =
+                new JsonObjectRequest( URL, jsonRequest,  new Response.Listener<JSONObject>() {
                     @Override
-                    public void onResponse(String response) {
-
+                    public void onResponse(final JSONObject response) {
                         ArrayList<School> list = null;
-                        Log.d("CAca",response+" !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
-
                         try {
-                            JSONObject json = new JSONObject(response);
-                            if(json.getInt(RES) == 1) {
-                                JSONArray search = json.getJSONArray(MSG);
+                            if(response.getInt(RES) == 1) {
+                                JSONArray search = response.getJSONArray(MSG);
 
                                 list = new ArrayList<>(search.length());
                                 for (int i = 0; i < search.length(); i++) {
@@ -104,3 +105,4 @@ public class SchoolsWebService implements SchoolsRepo {
         return aux.equals("1");
     }
 }
+

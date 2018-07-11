@@ -1,10 +1,13 @@
 package com.example.xosel.projectefinalpprog2.adapters;
 
+import android.content.Context;
+import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 
+import com.example.xosel.projectefinalpprog2.activities.MainActivity;
 import com.example.xosel.projectefinalpprog2.fragments.LlistaEscolesFragment;
 import com.example.xosel.projectefinalpprog2.model.School;
 
@@ -15,6 +18,7 @@ public class SpinnerAdapter implements AdapterView.OnItemSelectedListener{
     private LlistaEscolesFragment tots;
     private LlistaEscolesFragment escoles;
     private LlistaEscolesFragment altres;
+    private Context context;
 
     private FragmentStatePagerAdapter tabAdapter;
 
@@ -22,6 +26,9 @@ public class SpinnerAdapter implements AdapterView.OnItemSelectedListener{
     private ArrayList<School> all_schools_array;
     private ArrayList<School> school_schools_array;
     private ArrayList<School> other_schools_array;
+    ArrayList<School> all_schools_array_filtered ;
+    ArrayList<School> school_schools_array_filtered ;
+    ArrayList<School> other_schools_array_filtered ;
 
     public SpinnerAdapter(LlistaEscolesFragment tots, LlistaEscolesFragment escoles,
                           LlistaEscolesFragment altres,
@@ -36,17 +43,18 @@ public class SpinnerAdapter implements AdapterView.OnItemSelectedListener{
         this.school_schools_array = school_schools_array;
         this.other_schools_array = other_schools_array;
         this.tabAdapter = tabAdapter;
+        all_schools_array_filtered = new ArrayList<School>();
+        school_schools_array_filtered = new ArrayList<School>();
+        other_schools_array_filtered = new ArrayList<School>();
 
     }
 
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-        if(all_schools_array == null || tots == null || escoles == null || altres == null) {
-            return;
-        }
-        ArrayList<School> all_schools_array_filtered = new ArrayList<School>();
-        ArrayList<School> school_schools_array_filtered = new ArrayList<School>();
-        ArrayList<School> other_schools_array_filtered = new ArrayList<School>();
+        all_schools_array_filtered = new ArrayList<School>();
+        school_schools_array_filtered = new ArrayList<School>();
+        other_schools_array_filtered = new ArrayList<School>();
+
         switch (position) {
             case 0:
                 for(School auxSchool: all_schools_array){

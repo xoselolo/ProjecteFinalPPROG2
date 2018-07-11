@@ -14,6 +14,7 @@ import android.view.MenuInflater;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.ListView;
 import android.widget.Spinner;
 
 import com.example.xosel.projectefinalpprog2.R;
@@ -37,27 +38,27 @@ public class MainActivity extends AppCompatActivity {
     private ArrayList<School> all_schools_array;
     private ArrayList<School> school_schools_array;
     private ArrayList<School> other_schools_array;
-    private ArrayList<School> all_schools_array_filtered = new ArrayList<School>();
-    private ArrayList<School> school_schools_array_filtered = new ArrayList<School>();
-    private ArrayList<School> other_schools_array_filtered = new ArrayList<School>();
-    private TabLayout tabLayout;
-    private ViewPager viewPager;
-    private Spinner spinnerCities;
     private ProgressDialog progressDialog;
-    private TabAdapter tabAdapter;
+    private TabAdapter tabAdapter ;
+    private int spinner_selection = 0;
+    private Spinner spinnerCities;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        SchoolsRepo artistasRepo = new SchoolsWebService(this);
-        progressDialog = new ProgressDialog(this);
-        progressDialog.setMessage(getString(R.string.please_wait));
-        progressDialog.show();
-        artistasRepo.getSchools( dataListener);
         setContentView(R.layout.activity_main);
         createToolbar();
+        if(savedInstanceState == null){
+            SchoolsRepo artistasRepo = new SchoolsWebService(this);
+            progressDialog = new ProgressDialog(this);
+            progressDialog.setMessage(getString(R.string.please_wait));
+            progressDialog.show();
+            artistasRepo.getSchools(dataListener);
+
+        }else{
+            dataListener = null;
+        }
 
 
     }
@@ -68,21 +69,17 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void createTabs() {
-        tabLayout = (TabLayout) findViewById(R.id.tabs);
-        viewPager = (ViewPager) findViewById(R.id.viewPager);
+         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
+         ViewPager viewPager = (ViewPager) findViewById(R.id.viewPager);
 
         ArrayList<TabAdapter.TabEntry> entries = new ArrayList<>();
         tots = new LlistaEscolesFragment();
         escoles = new LlistaEscolesFragment();
         altres = new LlistaEscolesFragment();
 
-        all_schools_array_filtered = new ArrayList<School>();
-        school_schools_array_filtered = new ArrayList<School>();
-        other_schools_array_filtered = new ArrayList<School>();
-
-        tots.carrega_dades(all_schools_array_filtered);
-        escoles.carrega_dades(school_schools_array_filtered);
-        altres.carrega_dades(other_schools_array_filtered);
+        ArrayList<School> all_schools_array_filtered = new ArrayList<School>();
+        ArrayList<School> school_schools_array_filtered = new ArrayList<School>();
+        ArrayList<School> other_schools_array_filtered = new ArrayList<School>();
 
 
         entries.add(new TabAdapter.TabEntry(tots,getString(R.string.all)));
@@ -120,13 +117,14 @@ public class MainActivity extends AppCompatActivity {
     private SchoolsRepo.Callback<ArrayList<School>> dataListener = new SchoolsRepo.Callback<ArrayList<School>>() {
         @Override
         public void onResponse(ArrayList<School> schoolList_aux) {
-            if (progressDialog.isShowing()) {
-                progressDialog.dismiss();
-            }
             all_schools_array = schoolList_aux;
             separaSchoolOthers();
             createTabs();
             createSpinner();
+            if (progressDialog.isShowing()) {
+                progressDialog.dismiss();
+            }
+
         }
     };
     private void separaSchoolOthers(){
@@ -139,8 +137,33 @@ public class MainActivity extends AppCompatActivity {
             }
             if(type.isBatxillerat() || type.isFP() || type.isUniversitat()){
                 other_schools_array.add(aux);
+
             }
         }
     }
+   /* @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        outState.putInt("SPINNER",spinner_selection);
+        outState.putSerializable("ALL_SCHOOLS",all_schools_array);
+
+        super.onSaveInstanceState(outState);
+
+
+    } @Override
+
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        if (savedInstanceState != null) {
+            all_schools_array = (ArrayList<School>) savedInstanceState.getSerializable("ALL_SCHOOLS");
+            spinner_selection = savedInstanceState.getInt("SPINNER");
+            separaSchoolOthers();
+            createTabs();
+            createSpinner();
+        }
+        super.onRestoreInstanceState(savedInstanceState);
+    }*/
+
+
 
 }
+
+
